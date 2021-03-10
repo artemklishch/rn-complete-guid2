@@ -15,13 +15,23 @@ export default function App() {
   const gameOverHandler = (numOfRounds) => {
     setGuessRounds(numOfRounds);
   };
+  const configureGameStartHadler = () => {
+    setGuessRounds(0);
+    setUserNumber(null);
+  };
   let content = <StartGameScreen onStartGame={startGameHandler} />;
   if (userNumber && guessRound <= 0) {
     content = (
       <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />
     );
   } else if (guessRound > 0) {
-    content = <GameOverScreen />;
+    content = (
+      <GameOverScreen
+        roundsNumber={guessRound}
+        userNumber={userNumber}
+        onRestart={configureGameStartHadler}
+      />
+    );
   }
   return (
     <View style={styles.screen}>
